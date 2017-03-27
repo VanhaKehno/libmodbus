@@ -5,7 +5,9 @@ noinst_PROGRAMS = \
 	bandwidth-server-many-up \
 	bandwidth-client \
 	random-test-server \
+	random-test-server-devid \
 	random-test-client \
+	random-test-client-devid \
 	unit-test-server \
 	unit-test-client \
 	version
@@ -24,6 +26,12 @@ bandwidth_client_LDADD = $(common_ldflags)
 
 random_test_server_SOURCES = random-test-server.c
 random_test_server_LDADD = $(common_ldflags)
+
+random_test_server_devid_SOURCES = random-test-server-devid.c
+random_test_server_devid_LDADD = $(common_ldflags)
+
+random_test_client_devid_SOURCES = random-test-client-devid.c
+random_test_client_devid_LDADD = $(common_ldflags)
 
 random_test_client_SOURCES = random-test-client.c
 random_test_client_LDADD = $(common_ldflags)

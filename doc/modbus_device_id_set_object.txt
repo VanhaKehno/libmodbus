@@ -1,0 +1,53 @@
+modbus_device_id_set_object(3)
+==============================
+
+
+NAME
+----
+modbus_device_id_set_object - set Modbus Device Identification object to Modbus server object list
+
+
+SYNOPSIS
+--------
+*modbus_device_id_t* modbus_device_id_set_object(modbus_mapping_t *'mb_mapping', uint8_t 'id', const uint8_t* 'data', uint8_t 'length');*
+
+
+DESCRIPTION
+-----------
+Function shall create Device Identification object to device identification
+object list. Object list is stored in _mb_mapping_. _id_ corresponds to Modbus
+object id, _data_ shall be actual data and its length shall be set using
+_length_  argument.
+
+
+RETURN VALUE
+------------
+The function shall return newly created modbus object pointer value or NULL in
+case object could not be created.
+
+
+ERRORS
+------
+Memory allocation failure
+
+
+EXAMPLE
+-------
+[source,c]
+--------------------------------------------------------------------------------
+
+
+
+--------------------------------------------------------------------------------
+
+
+SEE ALSO
+--------
+linkmb:modbus_device_id[3]
+linkmb:modbus_device_id_delete[3]
+
+
+AUTHORS
+-------
+The libmodbus documentation was written by Stéphane Raimbault
+<stephane.raimbault@gmail.com>

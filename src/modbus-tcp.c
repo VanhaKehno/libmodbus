@@ -191,7 +191,7 @@ static int _modbus_tcp_pre_check_confirmation(modbus_t *ctx, const uint8_t *req,
     /* Check transaction ID */
     if (req[0] != rsp[0] || req[1] != rsp[1]) {
         if (ctx->debug) {
-            fprintf(stderr, "Invalid transaction ID received 0x%X (not 0x%X)\n",
+            fprintf(stderr, "Invalid transaction ID received 0x%.4X (not 0x%.4X)\n",
                     (rsp[0] << 8) + rsp[1], (req[0] << 8) + req[1]);
         }
         errno = EMBBADDATA;

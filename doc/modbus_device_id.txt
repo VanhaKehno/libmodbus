@@ -1,0 +1,92 @@
+modbus_device_id(3)
+===================
+
+
+NAME
+----
+modbus_device_id - execute Modbus Device Identification (0x2B / 0x0E) command
+
+
+SYNOPSIS
+--------
+*int modbus_device_id(modbus_t *'ctx', modbus_device_id_t **'obj_list', uint8_t 'code', uint8_t 'object_id', uint8_t *'more', uint8_t *'next_object');*
+
+
+DESCRIPTION
+-----------
+The *modbus_device_id* function shall read Modbus device identification objects
+from Modbus server. Results of successfull reading is stored in _obj_list_.
+
+Modbus read ic code in _code_ is used to choose Modbus device identification
+category to read from. _object_id_ controls object which will be the first
+object to be read. _more_ is set to 1 when objects are segmentized and
+next object is set to _next_object_.
+
+
+RETURN VALUE
+------------
+Function shalle store device identification objects to _obj_list_ and return 0
+if read was succesfull. Otherwise it will return -1.
+
+
+ERRORS
+------
+To be defined
+
+
+EXAMPLE
+-------
+[source,c]
+--------------------------------------------------------------------------------
+modbus_t *ctx;
+
+ctx = modbus_new_tcp("127.0.0.1", 1502);
+modbus_set_debug(ctx, TRUE);
+
+if (modbus_connect(ctx) == -1)
+{
+    fprintf(stderr, "Connection failed: %s\n",
+        modbus_strerror(errno));
+        modbus_free(ctx);
+        return -1;
+}
+
+modbus_device_id_t *root = NULL;
+
+uint8_t segmented = 0;
+uint8_t start_id = start;
+uint8_t next_id = 0;
+while(1)
+{
+    modbus_device_id(ctx, root, code, start_id, &segmented, &next_id);
+    if(segmented)
+    {
+        start_id = next_id;
+    }
+    else
+    {
+        break;
+    }
+}
+
+/* Device identification received here */
+
+
+modbus_device_id_delete(&root);
+modbus_close(ctx);
+modbus_free(ctx);
+--------------------------------------------------------------------------------
+
+
+SEE ALSO
+--------
+linkmb:modbus_close[3]
+linkmb:modbus_free[3]
+linkmb:modbus_device_id_delete[3]
+linkmb:modbus_device_id_set_object[3]
+
+
+AUTHORS
+-------
+The libmodbus documentation was written by Stéphane Raimbault
+<stephane.raimbault@gmail.com>

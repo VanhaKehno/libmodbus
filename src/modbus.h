@@ -58,18 +58,19 @@ MODBUS_BEGIN_DECLS
 #endif
 
 /* Modbus function codes */
-#define MODBUS_FC_READ_COILS                0x01
-#define MODBUS_FC_READ_DISCRETE_INPUTS      0x02
-#define MODBUS_FC_READ_HOLDING_REGISTERS    0x03
-#define MODBUS_FC_READ_INPUT_REGISTERS      0x04
-#define MODBUS_FC_WRITE_SINGLE_COIL         0x05
-#define MODBUS_FC_WRITE_SINGLE_REGISTER     0x06
-#define MODBUS_FC_READ_EXCEPTION_STATUS     0x07
-#define MODBUS_FC_WRITE_MULTIPLE_COILS      0x0F
-#define MODBUS_FC_WRITE_MULTIPLE_REGISTERS  0x10
-#define MODBUS_FC_REPORT_SLAVE_ID           0x11
-#define MODBUS_FC_MASK_WRITE_REGISTER       0x16
-#define MODBUS_FC_WRITE_AND_READ_REGISTERS  0x17
+#define MODBUS_FC_READ_COILS                    0x01
+#define MODBUS_FC_READ_DISCRETE_INPUTS          0x02
+#define MODBUS_FC_READ_HOLDING_REGISTERS        0x03
+#define MODBUS_FC_READ_INPUT_REGISTERS          0x04
+#define MODBUS_FC_WRITE_SINGLE_COIL             0x05
+#define MODBUS_FC_WRITE_SINGLE_REGISTER         0x06
+#define MODBUS_FC_READ_EXCEPTION_STATUS         0x07
+#define MODBUS_FC_WRITE_MULTIPLE_COILS          0x0F
+#define MODBUS_FC_WRITE_MULTIPLE_REGISTERS      0x10
+#define MODBUS_FC_REPORT_SLAVE_ID               0x11
+#define MODBUS_FC_MASK_WRITE_REGISTER           0x16
+#define MODBUS_FC_WRITE_AND_READ_REGISTERS      0x17
+#define MODBUS_FC_ENCAPSULATED_INTRFC_TRANSPORT 0x2B
 
 #define MODBUS_BROADCAST_ADDRESS    0
 
@@ -153,6 +154,8 @@ extern const unsigned int libmodbus_version_minor;
 extern const unsigned int libmodbus_version_micro;
 
 typedef struct _modbus modbus_t;
+typedef struct device_id_object modbus_device_id_t;
+typedef struct foo modbus_foo;
 
 typedef struct {
     int nb_bits;
@@ -163,10 +166,12 @@ typedef struct {
     int start_input_registers;
     int nb_registers;
     int start_registers;
+    int nb_device_identification;
     uint8_t *tab_bits;
     uint8_t *tab_input_bits;
     uint16_t *tab_input_registers;
     uint16_t *tab_registers;
+    modbus_device_id_t *tab_device_identification; /* device identification structure */
 } modbus_mapping_t;
 
 typedef enum
@@ -235,6 +240,9 @@ MODBUS_API int modbus_reply(modbus_t *ctx, const uint8_t *req,
 MODBUS_API int modbus_reply_exception(modbus_t *ctx, const uint8_t *req,
                                       unsigned int exception_code);
 
+MODBUS_API modbus_device_id_t* modbus_device_id_set_object(modbus_mapping_t *mb_mapping, uint8_t id, const uint8_t* data, uint8_t length);
+MODBUS_API int modbus_device_id(modbus_t *ctx, modbus_device_id_t **obj_list, uint8_t code, uint8_t object_id, uint8_t *more, uint8_t *next_object);
+MODBUS_API void modbus_device_id_delete(modbus_device_id_t **root);
 /**
  * UTILS FUNCTIONS
  **/
@@ -281,6 +289,11 @@ MODBUS_API void modbus_set_float_abcd(float f, uint16_t *dest);
 MODBUS_API void modbus_set_float_dcba(float f, uint16_t *dest);
 MODBUS_API void modbus_set_float_badc(float f, uint16_t *dest);
 MODBUS_API void modbus_set_float_cdab(float f, uint16_t *dest);
+
+MODBUS_API const uint8_t* modbus_device_id_get_data(const modbus_device_id_t* obj);
+MODBUS_API uint8_t modbus_device_id_get_id(const modbus_device_id_t* obj);
+MODBUS_API uint8_t modbus_device_id_get_length(const modbus_device_id_t* obj);
+MODBUS_API modbus_device_id_t* modbus_device_id_get_next(const modbus_device_id_t *obj);
 
 #include "modbus-tcp.h"
 #include "modbus-rtu.h"

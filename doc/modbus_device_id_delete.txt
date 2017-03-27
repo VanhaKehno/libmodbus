@@ -1,0 +1,39 @@
+modbus_device_id_delete(3)
+==========================
+
+
+NAME
+----
+modbus_device_id_delete - delete Modbus device identification structure
+
+
+SYNOPSIS
+--------
+*void modbus_device_id_delete(modbus_device_id_t **'root');*
+
+
+DESCRIPTION
+-----------
+Delete Device Identification object 
+
+
+RETURN VALUE
+------------
+None
+
+
+ERRORS
+------
+None
+
+
+SEE ALSO
+--------
+linkmb:modbus_device_id[3]
+linkmb:modbus_device_id_set_object[3]
+
+
+AUTHORS
+-------
+The libmodbus documentation was written by Stéphane Raimbault
+<stephane.raimbault@gmail.com>
