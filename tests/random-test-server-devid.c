@@ -23,15 +23,15 @@ typedef struct
 
 const device_id_init_t devid_obj[] =
 {
-    { "VendorName",        0,    "VendorName:A" },
-    { "ProductCode",       1,    "ProductCode:B" },
-    { "VendorUrl",         3,    "VendorUrl:D" },
-    { "MajorMinorVersion", 2,    "MajorMinorVersion:C" },
-    { "ProductName",       4,    "ProductName:E" },
-    { "ModelName",         5,    "ModelName:F" },
-    { "Short String",      0x80, "L0:GoofBallers" },
-    { "Long String",       0x81, "L1:ABCDEFGHIJKLMNOPQRTUVWXYZabcdefghijklmnopqrstuvwyxz1234567890abcdefghlijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" },
-    { "Long String2",      0x82, "L2:ABCDEFGHIJKLMNOPQRTUVWXYZabcdefghijklmnopqrstuvwyxz1234567890abcdefghlijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" }
+    { "VendorName",         0,    "VendorName:A" },
+    { "ProductCode",        1,    "ProductCode:B" },
+    { "VendorUrl",          3,    "VendorUrl:D" },
+    { "MajorMinorVersion",  2,    "MajorMinorVersion:C" },
+    { "ProductName",        4,    "ProductName:E" },
+    { "ModelName",          5,    "ModelName:F" },
+    { "Ext0",               0x80, "L0:GoofBallers" },
+    { "Ext1",               0x81, "L1:ABCDEFGHIJKLMNOPQRTUVWXYZabcdefghijklmnopqrstuvwyxz1234567890abcdefghlijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" },
+    { "Ext2",               0x82, "L2:Lorem ipsum dolor sit amet, consectetur adipiscing elit." }
 };
 
 static const int n_objects = sizeof(devid_obj)/sizeof(*devid_obj);
@@ -85,7 +85,7 @@ int main(void)
     modbus_device_id_t* current = root;
     for(; current != NULL; current = modbus_device_id_get_next(current))
     {
-        printf("%-15s  : %s\n", modbus_device_id_get_data(current), findTag(modbus_device_id_get_id(current), devid_obj));
+        printf("%-20s  : %s\n", findTag(modbus_device_id_get_id(current), devid_obj), modbus_device_id_get_data(current));
     }
     printf("no more objects\n");
 

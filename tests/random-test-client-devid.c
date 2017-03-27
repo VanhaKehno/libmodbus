@@ -80,7 +80,6 @@ static void print_device_id(const modbus_device_id_t *root)
     printf("Device Identification Object\n");
     while(current)
     {
-        printf("Object id: %.2x ", modbus_device_id_get_id(current));
         printf("%-25s : %s\n", findTag(modbus_device_id_get_id(current), devid_obj), modbus_device_id_get_data(current));
         current = modbus_device_id_get_next(current);
     }
