@@ -1,6 +1,8 @@
 A groovy modbus library
 =======================
 
+NOTE! Forked from [https://github.com/stephane/libmodbus](https://github.com/stephane/libmodbus) to create device identification implementation.
+
 [![Build Status](https://travis-ci.org/stephane/libmodbus.svg?branch=master)](https://travis-ci.org/stephane/libmodbus)
 
 Overview
